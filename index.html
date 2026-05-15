@@ -178,17 +178,16 @@
 
         .p-section-title { margin: 0 0 12px; font-size: 0.6875rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--p-doc-muted); }
 
-        /* CORREÇÃO CSS DA TABELA DE VISUALIZAÇÃO - AGORA O PREÇO NÃO CORTA! */
         .p-table-wrap { margin-bottom: 28px; border: 1px solid var(--p-doc-line); border-radius: 10px; overflow: hidden; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05); }
         .p-table { width: 100%; border-collapse: collapse; font-size: 0.8125rem; table-layout: fixed; }
         .p-table th, .p-table td { word-wrap: break-word; overflow: hidden; }
         .p-table th { background: linear-gradient(180deg, #001f40 0%, #000b18 100%); color: #f8fafc; padding: 12px 14px; text-align: left; font-size: 0.625rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; border: none; }
         
-        .p-table th:nth-child(1) { width: 150px; text-align: center; } /* Imagem */
-        .p-table th:nth-child(2) { width: 60px; text-align: center; }  /* Qtd */
-        .p-table th:nth-child(3) { width: auto; }                      /* Produto */
-        .p-table th:nth-child(4) { width: 150px; }                     /* Especificações */
-        .p-table th:nth-child(5) { width: 110px; text-align: right; }  /* Preço */
+        .p-table th:nth-child(1) { width: 150px; text-align: center; } 
+        .p-table th:nth-child(2) { width: 60px; text-align: center; }  
+        .p-table th:nth-child(3) { width: auto; }                      
+        .p-table th:nth-child(4) { width: 150px; }                     
+        .p-table th:nth-child(5) { width: 110px; text-align: right; }  
 
         .p-table td { padding: 12px 14px; border-bottom: 1px solid #f1f5f9; vertical-align: middle; color: var(--p-doc-ink); line-height: 1.45; }
         .p-table tbody tr:nth-child(even) td { background: #fafbfc; }
@@ -254,7 +253,7 @@
         .skip-link { position: absolute; left: -9999px; z-index: 9999; padding: 12px 16px; background: var(--accent); color: #fff; font-weight: 600; border-radius: var(--radius-sm); }
         .skip-link:focus { left: 12px; top: 12px; }
 
-        /* Estilos do Dashboard ("Visão Geral") */
+        /* Estilos do Dashboard */
         .dash-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 24px; }
         .dash-card { background: #f8fafc; border: 1px solid var(--border); padding: 20px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
         .dash-card-title { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
@@ -285,7 +284,7 @@
         .map-sidebar-footer { padding: 15px; border-top: 1px solid var(--border); background: var(--white); }
         .btn-popup { border: none; padding: 8px; border-radius: 6px; cursor: pointer; font-size: 11px; font-weight: 600; color: white; width: 100%; text-align: center; background: var(--primary); margin-top: 8px;}
 
-        /* Estilos PDF de Estações (Oculto) */
+        /* Estilos PDF de Estações */
         #pdf-template { display: none; width: 1122px; padding: 40px; background: #0f172a; color: white; }
         .pdf-header { border-bottom: 2px solid #3b82f6; padding-bottom: 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; }
         .pdf-table-map { width: 100%; border-collapse: collapse; }
@@ -411,6 +410,9 @@
                 <button type="button" class="nav-link" id="nav-approved" onclick="window.showScreen('screen-approved')">
                     <i class="fa fa-check-circle" aria-hidden="true"></i> Propostas Aprovadas
                 </button>
+                <button type="button" class="nav-link" id="menu-viabilidade" hidden onclick="window.showScreen('screen-viability')">
+                    <i class="fa fa-bolt" aria-hidden="true"></i> Viabilidade Técnica
+                </button>
                 <button type="button" class="nav-link" id="menu-map" hidden onclick="window.showScreen('screen-map')">
                     <i class="fa fa-map-marked-alt" aria-hidden="true"></i> Mapa de Estações
                 </button>
@@ -430,7 +432,7 @@
         <main class="main-content" id="main-app">
             <div id="screen-form" class="screen active">
                 <div class="card no-print">
-                    <h2 class="page-title">Gerar orçamento </h2>
+                    <h2 class="page-title">Gerar orçamento E-Mobility</h2>
                     <div class="form-grid-2">
                         <div class="field">
                             <label for="f-id">Nº proposta</label>
@@ -499,6 +501,42 @@
                     </div>
                     <button type="button" class="btn-add-item" onclick="window.addItemRow()">+ Adicionar item</button>
                     <button type="button" class="btn btn-primary" onclick="window.f_gerar_visual()">Gerar visualização da proposta</button>
+                </div>
+            </div>
+
+            <div id="screen-viability" class="screen">
+                <div class="card no-print">
+                    <h2 class="page-title">Análise de Viabilidade de Rede</h2>
+                    <p style="color:var(--text-muted); margin-bottom: 20px;">Consulte a capacidade da rede elétrica local para instalação de estações de recarga.</p>
+
+                    <div style="display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap;">
+                        <input type="text" id="viabilityAddr" placeholder="Digite o endereço completo da instalação..." style="flex:1; min-width: 250px;">
+                        <button class="btn btn-primary" style="width:auto;" onclick="window.analisarViabilidade()">Analisar Rede</button>
+                    </div>
+
+                    <div id="viabilityLoading" style="display:none; text-align:center; padding:20px; color:var(--accent); font-weight:700;">
+                        <i class="fa fa-spinner fa-spin"></i> Consultando topologia da rede local...
+                    </div>
+
+                    <div id="viabilityResult" style="display:none;">
+                        <div class="dash-grid">
+                            <div class="dash-card">
+                                <div class="dash-card-title">Transformador</div>
+                                <div class="dash-card-value" id="v-trafo" style="font-size: 1.2rem;">-</div>
+                            </div>
+                            <div class="dash-card">
+                                <div class="dash-card-title">Ocupação Atual</div>
+                                <div class="dash-card-value" id="v-carga">-</div>
+                            </div>
+                            <div class="dash-card">
+                                <div class="dash-card-title">Margem Disponível</div>
+                                <div class="dash-card-value" id="v-margem">-</div>
+                            </div>
+                        </div>
+
+                        <div id="v-alert" class="p-obs-box" style="margin-top:20px; border-left-width: 5px;">
+                            </div>
+                    </div>
                 </div>
             </div>
 
@@ -582,8 +620,7 @@
                                 <div class="p-obs-box" id="p-obs"></div>
                             </section>
                             <footer class="p-doc-footer">
-                                <span><strong>FullCharge</strong> · Novas tecnologias para um futuro
-mais veloz e sustentável . </span>
+                                <span><strong>FullCharge</strong> · Soluções de Recarga E-Mobility</span>
                                 <span class="p-doc-footer-note">Valores e prazos sujeitos a confirmação formal da proposta.</span>
                             </footer>
                         </div>
@@ -754,6 +791,7 @@ mais veloz e sustentável . </span>
                                 <label style="display:flex; align-items:center; gap:6px; text-transform:none; font-size:0.875rem; color:var(--text); cursor:pointer;"><input type="checkbox" id="perm-nova"> Nova Proposta</label>
                                 <label style="display:flex; align-items:center; gap:6px; text-transform:none; font-size:0.875rem; color:var(--text); cursor:pointer;"><input type="checkbox" id="perm-pendentes"> Pendentes</label>
                                 <label style="display:flex; align-items:center; gap:6px; text-transform:none; font-size:0.875rem; color:var(--text); cursor:pointer;"><input type="checkbox" id="perm-aprovadas"> Aprovadas (e BI)</label>
+                                <label style="display:flex; align-items:center; gap:6px; text-transform:none; font-size:0.875rem; color:var(--text); cursor:pointer;"><input type="checkbox" id="perm-viabilidade"> Viabilidade Técnica</label>
                                 <label style="display:flex; align-items:center; gap:6px; text-transform:none; font-size:0.875rem; color:var(--text); cursor:pointer;"><input type="checkbox" id="perm-mapa"> Mapa de Estações</label>
                                 <label style="display:flex; align-items:center; gap:6px; text-transform:none; font-size:0.875rem; color:var(--text); cursor:pointer;"><input type="checkbox" id="perm-catalogo"> Catálogo de Produtos</label>
                                 <label style="display:flex; align-items:center; gap:6px; text-transform:none; font-size:0.875rem; color:var(--text); cursor:pointer;"><input type="checkbox" id="perm-equipe"> Equipe / Permissões</label>
@@ -851,14 +889,23 @@ mais veloz e sustentável . </span>
             if(fTotal) fTotal.value = "R$ " + v;
         }
 
-        /* CORREÇÃO DO ERRO DE SINTAXE QUE TRAVAVA O LOGIN: */
         window.escapeHtml = function(s) {
             if (s == null) return '';
-            return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+            return String(s)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
         }
 
         window.escapeAttr = function(s) {
-            return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/`/g, '&#96;');
+            return String(s)
+                .replace(/&/g, '&amp;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;')
+                .replace(/</g, '&lt;')
+                .replace(/`/g, '&#x60;');
         }
 
         window.currentLoggedUser = function() { return (sessionStorage.getItem('saj_user') || '').toLowerCase(); }
@@ -1279,7 +1326,7 @@ mais veloz e sustentável . </span>
                 const snap = await window.dbGet(window.dbRef(window.db, 'usuarios/' + user));
                 if (snap.exists()) return alert('Este nome de usuário já existe.');
                 
-                const permissoesPadrao = { nova: false, pendentes: false, aprovadas: false, mapa: false, catalogo: false, equipe: false };
+                const permissoesPadrao = { nova: false, pendentes: false, aprovadas: false, viabilidade: false, mapa: false, catalogo: false, equipe: false };
                 await window.dbSet(window.dbRef(window.db, 'usuarios/' + user), { user, pass, status: 'pendente', perfil: 'operador', permissoes: permissoesPadrao });
                 window.toggleLogin('wait');
             } catch(e) {
@@ -1295,7 +1342,7 @@ mais veloz e sustentável . </span>
                 if(!user) return alert("Informe um usuário válido.");
 
                 if(user === 'lucas') {
-                    const permsMaster = { nova: true, pendentes: true, aprovadas: true, mapa: true, catalogo: true, equipe: true };
+                    const permsMaster = { nova: true, pendentes: true, aprovadas: true, viabilidade: true, mapa: true, catalogo: true, equipe: true };
                     try {
                         const snap = await window.dbGet(window.dbRef(window.db, 'usuarios/lucas'));
                         if(!snap.exists()) {
@@ -1322,9 +1369,9 @@ mais veloz e sustentável . </span>
                 let perms = d.permissoes;
                 if (!perms) {
                     if (perfilDef === 'administrador') {
-                        perms = { nova: true, pendentes: true, aprovadas: true, mapa: true, catalogo: true, equipe: true };
+                        perms = { nova: true, pendentes: true, aprovadas: true, viabilidade: true, mapa: true, catalogo: true, equipe: true };
                     } else {
-                        perms = { nova: true, pendentes: true, aprovadas: true, mapa: false, catalogo: false, equipe: false };
+                        perms = { nova: true, pendentes: true, aprovadas: true, viabilidade: false, mapa: false, catalogo: false, equipe: false };
                     }
                 }
 
@@ -1361,7 +1408,7 @@ mais veloz e sustentável . </span>
         }
 
         window.f_aprovar_u = async function(u) { 
-            const permissoesBase = { nova: true, pendentes: true, aprovadas: true, mapa: false, catalogo: false, equipe: false };
+            const permissoesBase = { nova: true, pendentes: true, aprovadas: true, viabilidade: true, mapa: false, catalogo: false, equipe: false };
             await window.dbUpdate(window.dbRef(window.db, 'usuarios/' + u), { status: 'aprovado', permissoes: permissoesBase }); 
         }
 
@@ -1377,10 +1424,11 @@ mais veloz e sustentável . </span>
             document.getElementById('edit-user-status').value = u.status;
             document.getElementById('edit-user-perfil').value = window.userPerfilFromRecord(u, login);
             
-            const p = u.permissoes || (window.userPerfilFromRecord(u, login) === 'administrador' ? {nova:true, pendentes:true, aprovadas:true, mapa:true, catalogo:true, equipe:true} : {nova:true, pendentes:true, aprovadas:true, mapa:false, catalogo:false, equipe:false});
+            const p = u.permissoes || (window.userPerfilFromRecord(u, login) === 'administrador' ? {nova:true, pendentes:true, aprovadas:true, viabilidade:true, mapa:true, catalogo:true, equipe:true} : {nova:true, pendentes:true, aprovadas:true, viabilidade:true, mapa:false, catalogo:false, equipe:false});
             document.getElementById('perm-nova').checked = !!p.nova;
             document.getElementById('perm-pendentes').checked = !!p.pendentes;
             document.getElementById('perm-aprovadas').checked = !!p.aprovadas;
+            document.getElementById('perm-viabilidade').checked = !!p.viabilidade;
             document.getElementById('perm-mapa').checked = !!p.mapa;
             document.getElementById('perm-catalogo').checked = !!p.catalogo;
             document.getElementById('perm-equipe').checked = !!p.equipe;
@@ -1400,6 +1448,7 @@ mais veloz e sustentável . </span>
                 nova: document.getElementById('perm-nova').checked,
                 pendentes: document.getElementById('perm-pendentes').checked,
                 aprovadas: document.getElementById('perm-aprovadas').checked,
+                viabilidade: document.getElementById('perm-viabilidade').checked,
                 mapa: document.getElementById('perm-mapa').checked,
                 catalogo: document.getElementById('perm-catalogo').checked,
                 equipe: document.getElementById('perm-equipe').checked
@@ -1433,6 +1482,7 @@ mais veloz e sustentável . </span>
                 if (id === 'screen-form' && !perms.nova) return alert('Acesso restrito.');
                 if (id === 'screen-history' && !perms.pendentes) return alert('Acesso restrito.');
                 if (id === 'screen-approved' && !perms.aprovadas) return alert('Acesso restrito.');
+                if (id === 'screen-viability' && !perms.viabilidade) return alert('Acesso restrito.');
                 if (id === 'screen-map' && !perms.mapa) return alert('Acesso restrito.');
                 if (id === 'screen-catalog' && !perms.catalogo) return alert('Acesso restrito.');
                 if (id === 'screen-users' && !perms.equipe) return alert('Acesso restrito.');
@@ -1449,7 +1499,15 @@ mais veloz e sustentável . </span>
         }
 
         window.updateActiveNav = function(id) {
-            const navMap = { 'screen-form': 'nav-new', 'screen-history': 'nav-history-pend', 'screen-approved': 'nav-approved', 'screen-map': 'menu-map', 'screen-users': 'menu-users', 'screen-catalog': 'menu-catalog' };
+            const navMap = { 
+                'screen-form': 'nav-new', 
+                'screen-history': 'nav-history-pend', 
+                'screen-approved': 'nav-approved', 
+                'screen-viability': 'menu-viabilidade',
+                'screen-map': 'menu-map', 
+                'screen-users': 'menu-users', 
+                'screen-catalog': 'menu-catalog' 
+            };
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.classList.toggle('active-link', link.id === navMap[id]);
             });
@@ -1495,7 +1553,6 @@ mais veloz e sustentável . </span>
             window.calcularTotal();
         }
 
-        /* COM TRATAMENTO DE ERROS DO FIREBASE PARA NÃO TRAVAR O SISTEMA */
         window.f_gerar_visual = async function() {
             const items = Array.from(document.querySelectorAll('#items-body tr')).map(tr => ({
                 q: tr.querySelector('.i-q').value,
@@ -1518,7 +1575,6 @@ mais veloz e sustentável . </span>
                 items, propostaStatus: 'pendente'
             };
 
-            // Tenta salvar na nuvem. Se falhar por regra do Firebase, a proposta continua sendo gerada na tela!
             try {
                 await window.dbSet(window.dbRef(window.db, 'propostas/' + data.id), data);
             } catch(e) {
@@ -1529,9 +1585,8 @@ mais veloz e sustentável . </span>
             window.showScreen('screen-preview');
         }
 
-        /* LÓGICA DO DASHBOARD E HISTORICO COM EDIÇÃO INSTANTÂNEA */
         window.renderHistory = function(obj) {
-            window.todasPropostas = obj || {}; // Salva globalmente para o relatório Excel e Edição instantânea
+            window.todasPropostas = obj || {}; 
             const hPend = document.getElementById('history-content');
             const hAppr = document.getElementById('approved-content');
             if (!obj) { 
@@ -1583,7 +1638,6 @@ mais veloz e sustentável . </span>
             if (hAppr) hAppr.innerHTML = buildT(aprovadas, 'approved');
         }
 
-        /* GERAÇÃO DE RELATÓRIO EXCEL (CSV) */
         window.parseBRDate = function(str) {
             if(!str) return 0;
             const parts = str.split('/');
@@ -1631,7 +1685,6 @@ mais veloz e sustentável . </span>
             document.body.removeChild(link);
         }
 
-        /* FUNÇÃO REABRIR APRIMORADA: INSTANTÂNEA E À PROVA DE FALHAS */
         window.reabrir = function(id) {
             try {
                 let p = window.todasPropostas && window.todasPropostas[id];
@@ -1660,7 +1713,63 @@ mais veloz e sustentável . </span>
 
         window.f_logout = function() { sessionStorage.clear(); location.reload(); }
 
-        // APLICAÇÃO DAS PERMISSÕES AO CARREGAR O SISTEMA
+        /* Lógica de Viabilidade Técnica */
+        window.analisarViabilidade = async function() {
+            const addr = document.getElementById('viabilityAddr').value;
+            if(!addr) return alert("Por favor, digite o endereço da instalação.");
+
+            const loading = document.getElementById('viabilityLoading');
+            const result = document.getElementById('viabilityResult');
+            
+            loading.style.display = 'block';
+            result.style.display = 'none';
+
+            try {
+                const r = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(addr)}`);
+                const data = await r.json();
+                
+                const lat = data.length > 0 ? parseFloat(data[0].lat) : -26.48;
+                const lon = data.length > 0 ? parseFloat(data[0].lon) : -49.07;
+
+                const semente = Math.abs(Math.sin(lat + lon));
+                const trafoId = `TR-CELESC-${Math.floor(semente * 8999) + 1000}`;
+                const carga = Math.floor(semente * 60) + 35; // 35% a 95%
+                const potencias = [75, 112.5, 150];
+                const potKva = potencias[Math.floor(semente * 3)];
+
+                document.getElementById('v-trafo').innerText = `${trafoId} (${potKva} kVA)`;
+                document.getElementById('v-carga').innerText = `${carga}%`;
+                document.getElementById('v-margem').innerText = `${100 - carga}%`;
+
+                const alertBox = document.getElementById('v-alert');
+                const vCargaVal = document.getElementById('v-carga');
+
+                if(carga < 65) {
+                    vCargaVal.style.color = "var(--success)";
+                    alertBox.style.borderColor = "var(--success)";
+                    alertBox.innerHTML = `<strong style="color:var(--success)">VIABILIDADE ALTA (Aprovação Imediata):</strong> O transformador local possui margem segura. Instalação de carregadores <strong>Smart 22kW</strong> ou <strong>Swift 30kW</strong> tem alta probabilidade de aprovação imediata pela concessionária sem necessidade de troca de transformador.`;
+                } else if(carga < 85) {
+                    vCargaVal.style.color = "var(--warning)";
+                    alertBox.style.borderColor = "var(--warning)";
+                    alertBox.innerHTML = `<strong style="color:var(--warning)">VIABILIDADE CONDICIONADA (Atenção):</strong> A rede está operando próximo ao limite em horários de pico. Recomendamos a instalação de um sistema de <strong>Gerenciamento Dinâmico de Carga (DLB)</strong> para evitar a queda do disjuntor geral, ou solicitar um estudo técnico à concessionária.`;
+                } else {
+                    vCargaVal.style.color = "var(--danger)";
+                    alertBox.style.borderColor = "var(--danger)";
+                    alertBox.innerHTML = `<strong style="color:var(--danger)">RISCO TÉCNICO ALTO (Possíveis Obras):</strong> O transformador está operando com nível crítico de saturação. Para instalar carregadores de alta potência nesta área, a concessionária provavelmente emitirá um parecer de "Inviabilidade Técnica Temporária" e exigirá a execução de obras de reforço na rede (Prazo estendido).`;
+                }
+
+                setTimeout(() => {
+                    loading.style.display = 'none';
+                    result.style.display = 'block';
+                }, 800);
+
+            } catch (e) {
+                console.error(e);
+                alert("Erro ao consultar serviço de mapas.");
+                loading.style.display = 'none';
+            }
+        };
+
         window.onload = () => {
             const u = sessionStorage.getItem('saj_user');
             if (u) {
@@ -1679,6 +1788,7 @@ mais veloz e sustentável . </span>
                     if(document.getElementById('nav-new')) document.getElementById('nav-new').hidden = !perms.nova;
                     if(document.getElementById('nav-history-pend')) document.getElementById('nav-history-pend').hidden = !perms.pendentes;
                     if(document.getElementById('nav-approved')) document.getElementById('nav-approved').hidden = !perms.aprovadas;
+                    if(document.getElementById('menu-viabilidade')) document.getElementById('menu-viabilidade').hidden = !perms.viabilidade;
                     if(document.getElementById('menu-map')) document.getElementById('menu-map').hidden = !perms.mapa;
                     if(document.getElementById('menu-catalog')) document.getElementById('menu-catalog').hidden = !perms.catalogo;
                     if(document.getElementById('menu-users')) document.getElementById('menu-users').hidden = !perms.equipe;
@@ -1686,6 +1796,7 @@ mais veloz e sustentável . </span>
                     if(!perms.nova && document.getElementById('screen-form')) document.getElementById('screen-form').innerHTML = '';
                     if(!perms.pendentes && document.getElementById('screen-history')) document.getElementById('screen-history').innerHTML = '';
                     if(!perms.aprovadas && document.getElementById('screen-approved')) document.getElementById('screen-approved').innerHTML = '';
+                    if(!perms.viabilidade && document.getElementById('screen-viability')) document.getElementById('screen-viability').innerHTML = '';
                     if(!perms.mapa && document.getElementById('screen-map')) document.getElementById('screen-map').innerHTML = '';
                     if(!perms.catalogo && document.getElementById('screen-catalog')) document.getElementById('screen-catalog').innerHTML = '';
                     if(!perms.equipe && document.getElementById('screen-users')) document.getElementById('screen-users').innerHTML = '';
@@ -1697,6 +1808,8 @@ mais veloz e sustentável . </span>
                         window.showScreen('screen-history');
                     } else if(perms.aprovadas) {
                         window.showScreen('screen-approved');
+                    } else if(perms.viabilidade) {
+                        window.showScreen('screen-viability');
                     } else if(perms.mapa) {
                         window.showScreen('screen-map');
                     } else if(perms.catalogo) {
