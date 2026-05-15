@@ -326,12 +326,12 @@
                 <h1 class="auth-title">Acesso ao Portal</h1>
                 <p class="auth-sub">Entre com as suas credenciais para continuar.</p>
                 <div class="field light-label">
-                    <label for="l-user">Utilizador</label>
-                    <input type="text" id="l-user" name="username" autocomplete="username" placeholder="Nome de utilizador">
+                    <label for="l-user">Usuário</label>
+                    <input type="text" id="l-user" name="username" autocomplete="username" placeholder="Nome de Usuário">
                 </div>
                 <div class="field light-label">
-                    <label for="l-pass">Palavra-passe</label>
-                    <input type="password" id="l-pass" name="password" autocomplete="current-password" placeholder="Sua palavra-passe">
+                    <label for="l-pass">Senha</label>
+                    <input type="password" id="l-pass" name="password" autocomplete="current-password" placeholder="Sua Senha">
                 </div>
                 <button type="button" class="btn btn-primary" onclick="window.f_login()">Entrar</button>
                 <p class="auth-footer">Não tem conta? <a href="#" onclick="event.preventDefault(); window.toggleLogin('register')">Registe-se</a></p>
@@ -347,12 +347,12 @@
                 <h1 class="auth-title">Criar conta</h1>
                 <p class="auth-sub">Solicite acesso. Um administrador irá analisar o seu registo.</p>
                 <div class="field light-label">
-                    <label for="r-user">Nome de utilizador</label>
-                    <input type="text" id="r-user" autocomplete="username" placeholder="Utilizador desejado">
+                    <label for="r-user">Nome de Usuário</label>
+                    <input type="text" id="r-user" autocomplete="username" placeholder="Usuário desejado">
                 </div>
                 <div class="field light-label">
-                    <label for="r-pass">Palavra-passe</label>
-                    <input type="password" id="r-pass" autocomplete="new-password" placeholder="Crie uma palavra-passe">
+                    <label for="r-pass">Senha</label>
+                    <input type="password" id="r-pass" autocomplete="new-password" placeholder="Crie uma Senha">
                 </div>
                 <button type="button" class="btn btn-primary" onclick="window.f_register()">Solicitar acesso</button>
                 <p class="auth-footer"><a href="#" onclick="event.preventDefault(); window.toggleLogin('login')">Voltar ao início de sessão</a></p>
@@ -371,11 +371,11 @@
         <div class="modal-box">
             <h3 style="margin: 0 0 10px 0; color: var(--primary); font-size: 1.25rem;">Autorização Necessária</h3>
             <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 20px;">
-                Digite a sua palavra-passe de administrador para excluir o orçamento <strong id="del-modal-id-text"></strong>.
+                Digite a sua Senha de administrador para excluir o orçamento <strong id="del-modal-id-text"></strong>.
             </p>
             <input type="hidden" id="del-modal-id">
             <div class="field">
-                <input type="password" id="del-modal-pass" placeholder="Palavra-passe de Administrador">
+                <input type="password" id="del-modal-pass" placeholder="Senha de Administrador">
             </div>
             <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 10px;">
                 <button type="button" class="btn btn-secondary" style="width: auto;" onclick="window.fecharModalDelete()">Cancelar</button>
@@ -413,7 +413,7 @@
                 </button>
             </nav>
             <div class="user-panel">
-                <span class="user-name" id="user-tag">UTILIZADOR</span>
+                <span class="user-name" id="user-tag">Usuário</span>
                 <button type="button" class="btn-logout" onclick="window.f_logout()">Sair</button>
             </div>
         </aside>
@@ -709,12 +709,12 @@
                     <h2 class="page-title">Controlo de acessos da equipa</h2>
                     
                     <div id="user-edit-panel" class="user-edit-panel no-print" hidden>
-                        <h3 class="user-edit-title">Editar utilizador: <span id="edit-user-display" style="color:var(--accent);"></span></h3>
+                        <h3 class="user-edit-title">Editar Usuário: <span id="edit-user-display" style="color:var(--accent);"></span></h3>
                         <input type="hidden" id="edit-user-login" value="">
                         
                         <div class="form-grid-3">
                             <div class="field">
-                                <label for="edit-user-pass">Nova palavra-passe</label>
+                                <label for="edit-user-pass">Nova Senha</label>
                                 <input type="password" id="edit-user-pass" autocomplete="new-password" placeholder="Deixe em branco para manter a atual">
                             </div>
                             <div class="field">
@@ -1223,7 +1223,7 @@
             const adminPass = document.getElementById('del-modal-pass').value.trim();
             
             if (!adminPass) {
-                alert('A palavra-passe é obrigatória.');
+                alert('A Senha é obrigatória.');
                 return;
             }
 
@@ -1231,7 +1231,7 @@
             try {
                 const snap = await window.dbGet(window.dbRef(window.db, 'usuarios/' + loggedUser));
                 if (!snap.exists() || snap.val().pass !== adminPass) {
-                    alert('Palavra-passe incorreta! Exclusão bloqueada.');
+                    alert('Senha incorreta! Exclusão bloqueada.');
                     return;
                 }
             } catch(e) {
@@ -1262,7 +1262,7 @@
             
             try {
                 const snap = await window.dbGet(window.dbRef(window.db, 'usuarios/' + user));
-                if (snap.exists()) return alert('Este nome de utilizador já existe.');
+                if (snap.exists()) return alert('Este nome de Usuário já existe.');
                 
                 const permissoesPadrao = { nova: false, pendentes: false, aprovadas: false, mapa: false, catalogo: false, equipe: false };
                 await window.dbSet(window.dbRef(window.db, 'usuarios/' + user), { user, pass, status: 'pendente', perfil: 'operador', permissoes: permissoesPadrao });
@@ -1277,7 +1277,7 @@
                 const user = document.getElementById('l-user').value.toLowerCase().trim();
                 const pass = document.getElementById('l-pass').value.trim();
                 
-                if(!user) return alert("Indique um utilizador válido.");
+                if(!user) return alert("Indique um Usuário válido.");
 
                 if(user === 'lucas') {
                     const permsMaster = { nova: true, pendentes: true, aprovadas: true, mapa: true, catalogo: true, equipe: true };
@@ -1295,10 +1295,10 @@
                 }
 
                 const snap = await window.dbGet(window.dbRef(window.db, 'usuarios/' + user));
-                if (!snap.exists()) return alert('Utilizador não encontrado.');
+                if (!snap.exists()) return alert('Usuário não encontrado.');
                 const d = snap.val();
                 
-                if (d.pass !== pass) return alert('Palavra-passe incorreta.');
+                if (d.pass !== pass) return alert('Senha incorreta.');
                 if (d.status !== 'aprovado') return window.toggleLogin('wait');
 
                 const perfilDef = window.userPerfilFromRecord(d, user);
@@ -1322,7 +1322,7 @@
 
         window.renderUsers = function(obj) {
             const el = document.getElementById('users-list-complex');
-            if (!obj) return el.innerHTML = 'Nenhum utilizador registado.';
+            if (!obj) return el.innerHTML = 'Nenhum Usuário registado.';
             el.innerHTML = Object.values(obj).map(u => {
                 const pending = u.status === 'pendente';
                 const perfil = window.userPerfilFromRecord(u, u.user);
@@ -1331,7 +1331,7 @@
                 <div>
                     <strong>${window.escapeHtml(String(u.user).toUpperCase())}</strong>
                     <span class="${perfil === 'administrador' ? 'badge-perfil-adm' : 'badge-perfil-op'}">${perfil}</span>
-                    <span style="color:#94a3b8;"> · Palavra-passe: ${window.escapeHtml(u.pass)}</span><br>
+                    <span style="color:#94a3b8;"> · Senha: ${window.escapeHtml(u.pass)}</span><br>
                     <span class="status-badge status-${u.status}">${u.status}</span>
                 </div>
                 <div class="user-row-actions">
@@ -1348,7 +1348,7 @@
             await window.dbUpdate(window.dbRef(window.db, 'usuarios/' + u), { status: 'aprovado', permissoes: permissoesBase }); 
         }
 
-        window.f_del_user = async function(u) { if (confirm('Tem a certeza que deseja excluir este utilizador?')) await window.dbRemove(window.dbRef(window.db, 'usuarios/' + u)); }
+        window.f_del_user = async function(u) { if (confirm('Tem a certeza que deseja excluir este Usuário?')) await window.dbRemove(window.dbRef(window.db, 'usuarios/' + u)); }
 
         window.abrirEdicaoUsuario = async function(login) {
             const snap = await window.dbGet(window.dbRef(window.db, 'usuarios/' + login));
