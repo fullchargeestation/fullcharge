@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portal de vendas e gestão FullCharge.">
+    <meta name="description" content="Portal de vendas FullCharge — orçamentos, propostas e gestão de acessos.">
     <meta name="theme-color" content="#000b18">
-    <title>FullCharge | CRM Comercial</title>
-    
+    <title>FullCharge | Portal de Vendas</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -251,7 +250,7 @@
         .dash-card-title { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
         .dash-card-value { font-size: 1.75rem; font-weight: 800; color: var(--primary); }
 
-        /* Estilos ecrã de Mapas */
+        /* Estilos tela de Mapas */
         .map-wrapper { display: flex; gap: 20px; height: calc(100vh - 120px); min-height: 500px; }
         .map-sidebar { width: 340px; display: flex; flex-direction: column; background: #fff; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); }
         #map-view { flex: 1; border-radius: var(--radius-md); border: 1px solid var(--border); z-index: 1; box-shadow: var(--shadow-sm); }
@@ -276,7 +275,7 @@
         .map-sidebar-footer { padding: 15px; border-top: 1px solid var(--border); background: var(--white); }
         .btn-popup { border: none; padding: 8px; border-radius: 6px; cursor: pointer; font-size: 11px; font-weight: 600; color: white; width: 100%; text-align: center; background: var(--primary); margin-top: 8px;}
 
-        /* Estilos PDF de Estações (Escondido) */
+        /* Estilos PDF de Estações (Oculto) */
         #pdf-template { display: none; width: 1122px; padding: 40px; background: #0f172a; color: white; }
         .pdf-header { border-bottom: 2px solid #3b82f6; padding-bottom: 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; }
         .pdf-table-map { width: 100%; border-collapse: collapse; }
@@ -327,14 +326,14 @@
                 <p class="auth-sub">Entre com as suas credenciais para continuar.</p>
                 <div class="field light-label">
                     <label for="l-user">Usuário</label>
-                    <input type="text" id="l-user" name="username" autocomplete="username" placeholder="Nome de Usuário">
+                    <input type="text" id="l-user" name="username" autocomplete="username" placeholder="Nome de usuário">
                 </div>
                 <div class="field light-label">
                     <label for="l-pass">Senha</label>
-                    <input type="password" id="l-pass" name="password" autocomplete="current-password" placeholder="Sua Senha">
+                    <input type="password" id="l-pass" name="password" autocomplete="current-password" placeholder="Sua senha">
                 </div>
                 <button type="button" class="btn btn-primary" onclick="window.f_login()">Entrar</button>
-                <p class="auth-footer">Não tem conta? <a href="#" onclick="event.preventDefault(); window.toggleLogin('register')">Registe-se</a></p>
+                <p class="auth-footer">Não tem conta? <a href="#" onclick="event.preventDefault(); window.toggleLogin('register')">Cadastre-se</a></p>
             </div>
 
             <div class="auth-card" id="box-register" hidden>
@@ -345,24 +344,24 @@
                     </div>
                 </div>
                 <h1 class="auth-title">Criar conta</h1>
-                <p class="auth-sub">Solicite acesso. Um administrador irá analisar o seu registo.</p>
+                <p class="auth-sub">Solicite acesso. Um administrador irá analisar o seu cadastro.</p>
                 <div class="field light-label">
-                    <label for="r-user">Nome de Usuário</label>
+                    <label for="r-user">Nome de usuário</label>
                     <input type="text" id="r-user" autocomplete="username" placeholder="Usuário desejado">
                 </div>
                 <div class="field light-label">
                     <label for="r-pass">Senha</label>
-                    <input type="password" id="r-pass" autocomplete="new-password" placeholder="Crie uma Senha">
+                    <input type="password" id="r-pass" autocomplete="new-password" placeholder="Crie uma senha">
                 </div>
                 <button type="button" class="btn btn-primary" onclick="window.f_register()">Solicitar acesso</button>
-                <p class="auth-footer"><a href="#" onclick="event.preventDefault(); window.toggleLogin('login')">Voltar ao início de sessão</a></p>
+                <p class="auth-footer"><a href="#" onclick="event.preventDefault(); window.toggleLogin('login')">Voltar ao login</a></p>
             </div>
 
             <div class="auth-card auth-card--wait" id="box-wait" hidden>
                 <i class="fa fa-clock auth-wait-icon" aria-hidden="true"></i>
-                <h1 class="auth-title">Registo recebido</h1>
-                <p class="auth-wait-text">O seu registo foi enviado para análise.<br><strong>Aguarde a aprovação</strong> de um administrador.</p>
-                <button type="button" class="btn btn-secondary" onclick="window.toggleLogin('login')">Entendi — voltar ao início de sessão</button>
+                <h1 class="auth-title">Cadastro recebido</h1>
+                <p class="auth-wait-text">O seu cadastro foi enviado para análise.<br><strong>Aguarde a liberação</strong> de um administrador.</p>
+                <button type="button" class="btn btn-secondary" onclick="window.toggleLogin('login')">Entendi — voltar ao login</button>
             </div>
         </div>
     </div>
@@ -371,7 +370,7 @@
         <div class="modal-box">
             <h3 style="margin: 0 0 10px 0; color: var(--primary); font-size: 1.25rem;">Autorização Necessária</h3>
             <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 20px;">
-                Digite a sua Senha de administrador para excluir o orçamento <strong id="del-modal-id-text"></strong>.
+                Digite a sua senha de administrador para excluir o orçamento <strong id="del-modal-id-text"></strong>.
             </p>
             <input type="hidden" id="del-modal-id">
             <div class="field">
@@ -409,11 +408,11 @@
                     <i class="fa fa-box" aria-hidden="true"></i> Catálogo de Produtos
                 </button>
                 <button type="button" class="nav-link" id="menu-users" hidden onclick="window.showScreen('screen-users')">
-                    <i class="fa fa-users-cog" aria-hidden="true"></i> Gestão de equipe
+                    <i class="fa fa-users-cog" aria-hidden="true"></i> Gestão da equipe
                 </button>
             </nav>
             <div class="user-panel">
-                <span class="user-name" id="user-tag">Usuário</span>
+                <span class="user-name" id="user-tag">USUÁRIO</span>
                 <button type="button" class="btn-logout" onclick="window.f_logout()">Sair</button>
             </div>
         </aside>
@@ -421,19 +420,19 @@
         <main class="main-content" id="main-app">
             <div id="screen-form" class="screen active">
                 <div class="card no-print">
-                    <h2 class="page-title">Gerar orçamento </h2>
+                    <h2 class="page-title">Gerar orçamento E-Mobility</h2>
                     <div class="form-grid-2">
                         <div class="field">
                             <label for="f-id">Nº proposta</label>
                             <input type="text" id="f-id" readonly aria-readonly="true">
                         </div>
                         <div class="field">
-                            <label for="f-cnpj">CNPJ / CPF <span style="font-weight:400; text-transform:none; letter-spacing:0; color:#94a3b8;">(Pressione Enter para procurar CNPJ)</span></label>
+                            <label for="f-cnpj">CNPJ / CPF <span style="font-weight:400; text-transform:none; letter-spacing:0; color:#94a3b8;">(Pressione Enter para buscar CNPJ)</span></label>
                             <input type="text" id="f-cnpj" inputmode="numeric" autocomplete="off" placeholder="000.000.000-00 ou 00.000.000/0000-00" oninput="window.maskCpfCnpj(this)" onkeydown="if(event.key==='Enter'){event.preventDefault();window.buscarCNPJ(this.value);}">
                         </div>
                     </div>
                     <div class="field">
-                        <label for="f-cli">Nome completo / Razão Social </label>
+                        <label for="f-cli">Razão social / Nome</label>
                         <input type="text" id="f-cli" autocomplete="organization">
                     </div>
                     <div class="field">
@@ -474,7 +473,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col" style="width:1%">Qtd</th>
-                                    <th scope="col">equipemento / Modelo</th>
+                                    <th scope="col">Equipamento / Modelo</th>
                                     <th scope="col">Descrição Técnica</th>
                                     <th scope="col" style="width:15%">Preço Unit.</th>
                                     <th scope="col" style="width:1%" aria-label="Remover"></th>
@@ -491,7 +490,7 @@
             <div id="screen-preview" class="screen">
                 <div class="no-print toolbar-preview">
                     <button type="button" class="btn btn-secondary" onclick="window.voltarDaPreview()">Voltar</button>
-                    <button type="button" class="btn btn-secondary" style="background:#e2e8f0; color:var(--primary);" onclick="window.reabrir(window._previewPropostaId)">Editar Dados</button>
+                    <button type="button" class="btn btn-secondary" style="background:#e2e8f0; color:var(--primary);" onclick="window.showScreen('screen-form')">Editar Dados</button>
                     <button type="button" class="btn btn-primary btn-print" onclick="window.print()">Imprimir proposta</button>
                     <button type="button" class="btn btn-danger-outline" id="btn-excluir-proposta" onclick="window.excluirPropostaAtual()">Excluir proposta</button>
                     <button type="button" class="btn btn-success-outline" id="btn-aprovar-proposta" hidden onclick="window.f_aprovar_proposta()">Aprovar proposta</button>
@@ -547,7 +546,7 @@
                                 <table class="p-table">
                                     <thead>
                                         <tr>
-                                            <th scope="col" style="text-align:center; width: 170px;">Imagem</th>
+                                            <th scope="col" style="text-align:center; width: 130px;">Imagem</th>
                                             <th scope="col" style="text-align:center; width: 50px;">Qtd</th>
                                             <th scope="col">Produto / Modelo</th>
                                             <th scope="col">Especificações</th>
@@ -568,8 +567,8 @@
                                 <div class="p-obs-box" id="p-obs"></div>
                             </section>
                             <footer class="p-doc-footer">
-                                <span><strong>FullCharge</strong> · Movimento limpo, sustentável e eficiente . </span>
-                                <span class="p-doc-footer-note">Reservamo-nos o direito de atualizar valores e cronogramas até a formalização do acordo.</span>
+                                <span><strong>FullCharge</strong> · Soluções de Recarga E-Mobility</span>
+                                <span class="p-doc-footer-note">Valores e prazos sujeitos a confirmação formal da proposta.</span>
                             </footer>
                         </div>
                     </article>
@@ -696,7 +695,7 @@
                             <input type="text" id="cat-img" placeholder="https://site.com/foto.jpg">
                         </div>
                     </div>
-                    <button type="button" id="btn-save-catalog" class="btn btn-primary" style="width:auto; margin-bottom: 20px;" onclick="window.salvarProdutoCatalogo()">Adicionar equipemento ao Catálogo</button>
+                    <button type="button" id="btn-save-catalog" class="btn btn-primary" style="width:auto; margin-bottom: 20px;" onclick="window.salvarProdutoCatalogo()">Adicionar Equipamento ao Catálogo</button>
                     
                     <div class="items-table-wrap">
                         <div id="catalog-list-render"></div>
@@ -706,19 +705,19 @@
 
             <div id="screen-users" class="screen">
                 <div class="card">
-                    <h2 class="page-title">Controlo de acessos da equipe</h2>
+                    <h2 class="page-title">Controle de acessos da equipe</h2>
                     
                     <div id="user-edit-panel" class="user-edit-panel no-print" hidden>
-                        <h3 class="user-edit-title">Editar Usuário: <span id="edit-user-display" style="color:var(--accent);"></span></h3>
+                        <h3 class="user-edit-title">Editar usuário: <span id="edit-user-display" style="color:var(--accent);"></span></h3>
                         <input type="hidden" id="edit-user-login" value="">
                         
                         <div class="form-grid-3">
                             <div class="field">
-                                <label for="edit-user-pass">Nova Senha</label>
+                                <label for="edit-user-pass">Nova senha</label>
                                 <input type="password" id="edit-user-pass" autocomplete="new-password" placeholder="Deixe em branco para manter a atual">
                             </div>
                             <div class="field">
-                                <label for="edit-user-status">Estado do acesso</label>
+                                <label for="edit-user-status">Status do acesso</label>
                                 <select id="edit-user-status">
                                     <option value="pendente">Pendente</option>
                                     <option value="aprovado">Aprovado</option>
@@ -741,7 +740,7 @@
                                 <label style="display:flex; align-items:center; gap:6px; text-transform:none; font-size:0.875rem; color:var(--text); cursor:pointer;"><input type="checkbox" id="perm-aprovadas"> Aprovadas (e BI)</label>
                                 <label style="display:flex; align-items:center; gap:6px; text-transform:none; font-size:0.875rem; color:var(--text); cursor:pointer;"><input type="checkbox" id="perm-mapa"> Mapa de Estações</label>
                                 <label style="display:flex; align-items:center; gap:6px; text-transform:none; font-size:0.875rem; color:var(--text); cursor:pointer;"><input type="checkbox" id="perm-catalogo"> Catálogo de Produtos</label>
-                                <label style="display:flex; align-items:center; gap:6px; text-transform:none; font-size:0.875rem; color:var(--text); cursor:pointer;"><input type="checkbox" id="perm-equipe"> equipe / Permissões</label>
+                                <label style="display:flex; align-items:center; gap:6px; text-transform:none; font-size:0.875rem; color:var(--text); cursor:pointer;"><input type="checkbox" id="perm-equipe"> Equipe / Permissões</label>
                             </div>
                         </div>
 
@@ -947,7 +946,7 @@
         }
 
         window.openStreetViewPopup = function(lat, lng) {
-            window.open(`http://maps.google.com/maps?q=&layer=c&cbll=$${lat},${lng}`, 'StreetView', 'width=900,height=600');
+            window.open(`http://googleusercontent.com/maps.google.com/6{lat},${lng}`, 'StreetView', 'width=900,height=600');
         }
 
         window.generateMapPDF = function() {
@@ -983,7 +982,7 @@
             document.getElementById('cat-preco').value = p.preco || '';
             document.getElementById('cat-img').value = p.img || '';
             
-            document.getElementById('btn-save-catalog').innerHTML = '<i class="fa fa-save"></i> Guardar Alterações';
+            document.getElementById('btn-save-catalog').innerHTML = '<i class="fa fa-save"></i> Salvar Alterações';
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -997,7 +996,7 @@
             const img = document.getElementById('cat-img').value.trim();
             const oldKey = document.getElementById('cat-old-key').value;
             
-            if (!nome) return alert('Por favor, informe o nome do equipemento.');
+            if (!nome) return alert('Por favor, informe o nome do equipamento.');
             const newKey = nome.replace(/[.#$\[\]]/g, '').replace(/\//g, '-');
             
             try {
@@ -1012,11 +1011,11 @@
                 document.getElementById('cat-preco').value = '';
                 document.getElementById('cat-img').value = '';
                 document.getElementById('cat-old-key').value = '';
-                document.getElementById('btn-save-catalog').innerHTML = 'Adicionar equipemento ao Catálogo';
+                document.getElementById('btn-save-catalog').innerHTML = 'Adicionar Equipamento ao Catálogo';
                 
-                alert('Produto guardado no catálogo com sucesso!');
+                alert('Produto salvo no catálogo com sucesso!');
             } catch(e) {
-                alert("Erro ao guardar no banco de dados. Verifique as permissões do Firebase.");
+                alert("Erro ao salvar no banco de dados. Verifique as permissões do Firebase.");
             }
         }
 
@@ -1024,7 +1023,7 @@
             const perms = JSON.parse(sessionStorage.getItem('fc_perms') || '{}');
             if (!window.isAdministrator() && !perms.catalogo) return;
             
-            if(confirm('Tem a certeza de que deseja remover este equipemento do catálogo?')) {
+            if(confirm('Tem certeza que deseja remover este equipamento do catálogo?')) {
                 await window.dbRemove(window.dbRef(window.db, 'produtos/' + key));
             }
         }
@@ -1036,7 +1035,7 @@
                 return; 
             }
 
-            let html = '<table class="items-table" style="min-width: 100%;"><thead><tr><th style="width:70px; text-align:center;">Foto</th><th>equipemento</th><th>Categoria</th><th>Preço</th><th style="text-align:center; width:90px;">Ações</th></tr></thead><tbody>';
+            let html = '<table class="items-table" style="min-width: 100%;"><thead><tr><th style="width:70px; text-align:center;">Foto</th><th>Equipamento</th><th>Categoria</th><th>Preço</th><th style="text-align:center; width:90px;">Ações</th></tr></thead><tbody>';
             
             Object.entries(obj).forEach(([key, p]) => {
                 const imgSafe = p.img ? window.escapeAttr(p.img) : 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="%2364748b" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>';
@@ -1097,7 +1096,7 @@
                 html += `</optgroup>`;
             }
 
-            html += `<optgroup label="Personalizado"><option value="${GRUPO_OUTRO}">Outro equipemento...</option></optgroup>`;
+            html += `<optgroup label="Personalizado"><option value="${GRUPO_OUTRO}">Outro equipamento...</option></optgroup>`;
             return html;
         }
 
@@ -1169,16 +1168,15 @@
             else window.showScreen('screen-form');
         }
 
-        window.abrirGerenciar = async function(id, origin = 'history') {
+        window.abrirGerenciar = function(id, origin = 'history') {
             try {
-                const s = await window.dbGet(window.dbRef(window.db, 'propostas/' + id));
-                const p = s.val();
+                let p = window.todasPropostas && window.todasPropostas[id];
                 if (!p) return alert('Proposta não encontrada.');
                 window._previewOrigin = origin;
                 window.fillPreviewFromData(p);
                 window.showScreen('screen-preview');
             } catch(e) {
-                alert("Erro ao aceder aos dados da proposta.");
+                alert("Erro ao acessar os dados da proposta.");
             }
         }
 
@@ -1223,7 +1221,7 @@
             const adminPass = document.getElementById('del-modal-pass').value.trim();
             
             if (!adminPass) {
-                alert('A Senha é obrigatória.');
+                alert('A senha é obrigatória.');
                 return;
             }
 
@@ -1235,7 +1233,7 @@
                     return;
                 }
             } catch(e) {
-                alert('Erro ao validar permissões com a base de dados.');
+                alert('Erro ao validar permissões com o banco de dados.');
                 return;
             }
 
@@ -1262,7 +1260,7 @@
             
             try {
                 const snap = await window.dbGet(window.dbRef(window.db, 'usuarios/' + user));
-                if (snap.exists()) return alert('Este nome de Usuário já existe.');
+                if (snap.exists()) return alert('Este nome de usuário já existe.');
                 
                 const permissoesPadrao = { nova: false, pendentes: false, aprovadas: false, mapa: false, catalogo: false, equipe: false };
                 await window.dbSet(window.dbRef(window.db, 'usuarios/' + user), { user, pass, status: 'pendente', perfil: 'operador', permissoes: permissoesPadrao });
@@ -1277,7 +1275,7 @@
                 const user = document.getElementById('l-user').value.toLowerCase().trim();
                 const pass = document.getElementById('l-pass').value.trim();
                 
-                if(!user) return alert("Indique um Usuário válido.");
+                if(!user) return alert("Informe um usuário válido.");
 
                 if(user === 'lucas') {
                     const permsMaster = { nova: true, pendentes: true, aprovadas: true, mapa: true, catalogo: true, equipe: true };
@@ -1286,7 +1284,9 @@
                         if(!snap.exists()) {
                             await window.dbSet(window.dbRef(window.db, 'usuarios/lucas'), { user: 'lucas', pass: pass || '1234', status: 'aprovado', perfil: 'administrador', permissoes: permsMaster });
                         }
-                    } catch(e) {}
+                    } catch(e) {
+                        console.log("Ignorar erro de escrita/leitura para liberar o admin.");
+                    }
                     sessionStorage.setItem('saj_user', 'lucas');
                     sessionStorage.setItem('saj_perfil', 'administrador');
                     sessionStorage.setItem('fc_perms', JSON.stringify(permsMaster));
@@ -1316,13 +1316,13 @@
                 sessionStorage.setItem('fc_perms', JSON.stringify(perms));
                 location.reload();
             } catch (error) {
-                alert("ERRO DE CONEXÃO: O Firebase bloqueou o acesso. Aceda à consola do Firebase > Realtime Database > Regras e altere '.read' e '.write' para true.");
+                alert("ERRO DE CONEXÃO: O Firebase bloqueou o acesso. Acesse o console do Firebase > Realtime Database > Regras e altere '.read' e '.write' para true.");
             }
         }
 
         window.renderUsers = function(obj) {
             const el = document.getElementById('users-list-complex');
-            if (!obj) return el.innerHTML = 'Nenhum Usuário registado.';
+            if (!obj) return el.innerHTML = 'Nenhum usuário cadastrado.';
             el.innerHTML = Object.values(obj).map(u => {
                 const pending = u.status === 'pendente';
                 const perfil = window.userPerfilFromRecord(u, u.user);
@@ -1348,7 +1348,7 @@
             await window.dbUpdate(window.dbRef(window.db, 'usuarios/' + u), { status: 'aprovado', permissoes: permissoesBase }); 
         }
 
-        window.f_del_user = async function(u) { if (confirm('Tem a certeza que deseja excluir este Usuário?')) await window.dbRemove(window.dbRef(window.db, 'usuarios/' + u)); }
+        window.f_del_user = async function(u) { if (confirm('Tem certeza que deseja excluir este usuário?')) await window.dbRemove(window.dbRef(window.db, 'usuarios/' + u)); }
 
         window.abrirEdicaoUsuario = async function(login) {
             const snap = await window.dbGet(window.dbRef(window.db, 'usuarios/' + login));
@@ -1406,7 +1406,7 @@
                 document.getElementById('f-end').value = [est.logradouro, est.numero].filter(Boolean).join(', ');
                 document.getElementById('f-bairro').value = est.bairro || '';
                 document.getElementById('f-cidade').value = d.estabelecimento.cidade.nome || '';
-            } catch (e) { alert('Erro ao procurar o CNPJ.'); }
+            } catch (e) { alert('Erro ao buscar o CNPJ.'); }
         }
 
         window.showScreen = function(id) {
@@ -1451,12 +1451,12 @@
                 if (sel.value && window.produtosCatalogo) {
                     const prod = Object.values(window.produtosCatalogo).find(p => p.nome === sel.value);
                     if(prod) {
-                        if(prod.cat) desc.value = prod.cat; 
-                        if(prod.preco && precoInput) precoInput.value = prod.preco;
+                        if (prod.cat) desc.value = prod.cat;
+                        if (prod.preco) precoInput.value = prod.preco;
                     }
                 } else if (!sel.value) {
                     desc.value = '';
-                    if(precoInput) precoInput.value = '';
+                    precoInput.value = '';
                 }
             }
             window.calcularTotal();
@@ -1468,7 +1468,7 @@
             const tr = tbody.insertRow();
             tr.innerHTML = `<td><input type="number" class="i-q" value="${q}" style="width:64px; text-align:center;" oninput="window.calcularTotal()"></td>
                 <td><select class="i-g-select" onchange="window.toggleGrupoOutro(this)">${window.getGrupoSelectInnerHtml()}</select>
-                    <input type="text" class="i-g-outro" style="display:none;margin-top:5px" placeholder="Qual equipemento?"></td>
+                    <input type="text" class="i-g-outro" style="display:none;margin-top:5px" placeholder="Qual equipamento?"></td>
                 <td><input type="text" class="i-d" value="${window.escapeAttr(d)}"></td>
                 <td><input type="text" class="i-p" value="${window.escapeAttr(p)}" oninput="window.maskMoney(this); window.calcularTotal()" placeholder="R$ 0,00"></td>
                 <td style="text-align:center;"><button type="button" class="btn-icon-remove" onclick="this.closest('tr').remove(); window.calcularTotal()"><i class="fa fa-times"></i></button></td>`;
@@ -1478,12 +1478,13 @@
             window.calcularTotal();
         }
 
+        /* COM TRATAMENTO DE ERROS DO FIREBASE PARA NÃO TRAVAR O SISTEMA */
         window.f_gerar_visual = async function() {
             const items = Array.from(document.querySelectorAll('#items-body tr')).map(tr => ({
                 q: tr.querySelector('.i-q').value,
                 g: tr.querySelector('.i-g-select').value === GRUPO_OUTRO ? tr.querySelector('.i-g-outro').value : tr.querySelector('.i-g-select').value,
                 d: tr.querySelector('.i-d').value,
-                p: tr.querySelector('.i-p') ? tr.querySelector('.i-p').value : ''
+                p: tr.querySelector('.i-p').value
             }));
             const data = {
                 id: document.getElementById('f-id').value,
@@ -1500,23 +1501,25 @@
                 items, propostaStatus: 'pendente'
             };
 
+            // Tenta salvar na nuvem. Se falhar por regra do Firebase, a proposta continua sendo gerada na tela!
             try {
                 await window.dbSet(window.dbRef(window.db, 'propostas/' + data.id), data);
             } catch(e) {
-                alert("AVISO DE SISTEMA:\n\nA proposta foi gerada para impressão, mas NÃO FOI GUARDADA porque as permissões do Firebase estão bloqueadas.\n\nAceda à consola do Firebase > Realtime Database > Regras e ative .read e .write para true.");
+                alert("AVISO DE SISTEMA:\n\nA proposta foi gerada para impressão, mas NÃO FOI SALVA NA NUVEM porque as permissões do Firebase estão bloqueadas.\n\nAcesse o Console do Firebase > Realtime Database > Regras e ative .read e .write para true.");
             }
 
             window.fillPreviewFromData(data);
             window.showScreen('screen-preview');
         }
 
+        /* LÓGICA DO DASHBOARD E HISTORICO COM EDIÇÃO INSTANTÂNEA */
         window.renderHistory = function(obj) {
-            window.todasPropostas = obj || {}; 
+            window.todasPropostas = obj || {}; // Salva globalmente para o relatório Excel e Edição instantânea
             const hPend = document.getElementById('history-content');
             const hAppr = document.getElementById('approved-content');
             if (!obj) { 
-                if (hPend) hPend.innerHTML = 'Nenhum registo encontrado.'; 
-                if (hAppr) hAppr.innerHTML = 'Nenhum registo encontrado.'; 
+                if (hPend) hPend.innerHTML = 'Nenhuma proposta encontrada.'; 
+                if (hAppr) hAppr.innerHTML = 'Nenhuma proposta encontrada.'; 
                 if (document.getElementById('dash-receita')) document.getElementById('dash-receita').textContent = 'R$ 0,00';
                 if (document.getElementById('dash-projetos')) document.getElementById('dash-projetos').textContent = '0';
                 if (document.getElementById('dash-ticket')) document.getElementById('dash-ticket').textContent = 'R$ 0,00';
@@ -1552,7 +1555,7 @@
                         <td><span class="status-badge status-${window.normProposalStatus(p.propostaStatus)}">${window.normProposalStatus(p.propostaStatus)}</span></td>
                         <td><div class="history-actions">
                             <button class="btn-table btn-table--muted" onclick="window.reabrir('${p.id}')">Editar</button>
-                            <button class="btn-table" onclick="window.abrirGerenciar('${p.id}', '${type}')">Gerir</button>
+                            <button class="btn-table" onclick="window.abrirGerenciar('${p.id}', '${type}')">Gerenciar</button>
                             ${isAdmin && window.normProposalStatus(p.propostaStatus) === 'pendente' ? `<button class="btn-table btn-table--success" onclick="window.f_quick_status('${p.id}', 'aprovado')">Aprovar</button>` : ''}
                             ${isAdmin && window.normProposalStatus(p.propostaStatus) === 'aprovado' ? `<button class="btn-table btn-table--danger" onclick="window.f_quick_status('${p.id}', 'pendente')">Retornar</button>` : ''}
                             ${isAdmin ? `<button class="btn-table btn-table--danger" onclick="window.excluirProposta('${p.id}')"><i class="fa fa-trash"></i></button>` : ''}
@@ -1563,6 +1566,7 @@
             if (hAppr) hAppr.innerHTML = buildT(aprovadas, 'approved');
         }
 
+        /* GERAÇÃO DE RELATÓRIO EXCEL (CSV) */
         window.parseBRDate = function(str) {
             if(!str) return 0;
             const parts = str.split('/');
@@ -1610,8 +1614,36 @@
             document.body.removeChild(link);
         }
 
+        /* FUNÇÃO REABRIR APRIMORADA: INSTANTÂNEA E À PROVA DE FALHAS */
+        window.reabrir = function(id) {
+            try {
+                let p = window.todasPropostas && window.todasPropostas[id];
+                if (!p) return alert("Proposta não encontrada no histórico local.");
+                
+                document.getElementById('f-id').value = p.id;
+                document.getElementById('f-cli').value = p.cli;
+                document.getElementById('f-cnpj').value = p.cnpj;
+                document.getElementById('f-end').value = p.end;
+                document.getElementById('f-bairro').value = p.bairro || '';
+                document.getElementById('f-cidade').value = p.cidade || '';
+                document.getElementById('f-total').value = p.total;
+                document.getElementById('f-email').value = p.email || '';
+                document.getElementById('f-tel').value = p.tel || '';
+                document.getElementById('f-obs').value = p.obs || '';
+                
+                document.getElementById('items-body').innerHTML = '';
+                (p.items || []).forEach(i => window.addItemRow(i.q, i.g, i.d, i.p));
+                
+                window.calcularTotal(); 
+                window.showScreen('screen-form');
+            } catch(e) {
+                alert("Erro ao carregar dados da proposta.");
+            }
+        }
+
         window.f_logout = function() { sessionStorage.clear(); location.reload(); }
 
+        // APLICAÇÃO DAS PERMISSÕES AO CARREGAR O SISTEMA
         window.onload = () => {
             const u = sessionStorage.getItem('saj_user');
             if (u) {
